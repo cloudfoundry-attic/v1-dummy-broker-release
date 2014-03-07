@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'vcap_services_base', '~> 0.2.9', :git => 'git://github.com/cloudfoundry/vcap-services-base.git', branch: 'master'
+gem 'dotenv'
+
+group :test do
+  gem 'rspec'
+end
+
+
+
+

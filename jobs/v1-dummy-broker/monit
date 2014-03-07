@@ -1,0 +1,5 @@
+check process broker
+  with pidfile /var/vcap/sys/run/v1-dummy-broker/v1-dummy-broker.pid
+  start program "/var/vcap/jobs/v1-dummy-broker/bin/broker_ctl start" with timeout 60 seconds
+  stop program "/var/vcap/jobs/v1-dummy-broker/bin/broker_ctl stop" with timeout 60 seconds
+  group vcap

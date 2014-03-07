@@ -1,0 +1,7 @@
+---
+name: v1-dummy-broker
+dependencies:
+- sqlite
+- ruby
+files:
+- v1-dummy-broker/**/*

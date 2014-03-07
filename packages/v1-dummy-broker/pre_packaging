@@ -1,0 +1,8 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+(
+  cd ${BUILD_DIR}/v1-dummy-broker
+  bundle package --all
+  rm -rf spec
+)

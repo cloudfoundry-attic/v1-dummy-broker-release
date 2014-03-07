@@ -1,0 +1,46 @@
+#!/bin/bash
+
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+
+RUN_DIR=/var/vcap/sys/run/v1-dummy-broker
+LOG_DIR=/var/vcap/sys/log/v1-dummy-broker
+JOB_DIR=/var/vcap/jobs/v1-dummy-broker
+
+PIDFILE=$RUN_DIR/v1-dummy-broker.pid
+
+source /var/vcap/packages/common/utils.sh
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "V1 Dummy Broker"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    <% if properties.syslog_aggregator %>
+    /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
+    <% end %>
+
+    cp $JOB_DIR/config/broker.env /var/vcap/packages/v1-dummy-broker/v1-dummy-broker/.env
+    cd /var/vcap/packages/v1-dummy-broker/v1-dummy-broker
+
+    exec bin/start \
+         >>$LOG_DIR/v1-dummy-broker.stdout.log \
+         2>>$LOG_DIR/v1-dummy-broker.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: broker_ctl {start|stop}"
+
+    ;;
+
+esac

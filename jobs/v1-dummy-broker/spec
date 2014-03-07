@@ -1,0 +1,12 @@
+---
+name: v1-dummy-broker
+
+templates:
+  broker.env.erb: config/broker.env
+  broker_ctl: bin/broker_ctl
+
+packages:
+- common
+- ruby
+- sqlite
+- v1-dummy-broker
