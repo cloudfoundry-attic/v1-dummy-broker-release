@@ -14,3 +14,5 @@ blobs
 *#
 #*
 src/v1-dummy-broker/config/config.yml
+bosh-lite/manifests
+bosh-lite/tmp

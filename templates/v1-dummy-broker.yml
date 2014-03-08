@@ -1,0 +1,41 @@
+---
+name: v1-dummy-broker
+director_uuid: (( merge ))
+releases:
+  - name: v1-dummy-broker
+    version: latest
+
+jobs:
+  - name: v1-dummy-broker
+    instances: 1
+    release: v1-dummy-broker
+    resource_pool: (( merge ))
+    template:
+    - v1-dummy-broker
+    networks:
+    - name: services1
+      static_ips: (( static_ips(16) ))
+    properties:
+      networks:
+        broker_network: (( merge ))
+      env:
+        service_unique_id: v1-dummy-broker-service
+        plan_unique_id: v1-dummy-broker-plan
+        pid_file: /var/vcap/sys/run/v1-dummy-broker/v1-dummy-broker.pid
+        nats_uri: (( merge ))
+        cloud_controller_uri: (( merge ))
+        uaa_endpoint: (( merge ))
+        uaa_client_id: cf
+        uaa_username: (( merge ))
+        uaa_password: (( merge ))
+
+update:
+  canaries: 1
+  canary_watch_time: 30000-60000
+  update_watch_time: 30000-60000
+  max_in_flight: 4
+  max_errors: 1
+
+networks: (( merge ))
+compilation: (( merge ))
+resource_pools: (( merge ))
