@@ -108,8 +108,10 @@ Set your deployment using the deployment manifest you generated above.
 
     $ bosh deployment ~/workspace/deployments/mydevenv/v1-dummy-broker-mydevenv.yml
     $ bosh deploy
+    
+#### Deploy to bosh-lite
 
-If you followed the instructions for bosh-lite above your manifest is in the `v1-dummy-broker-release/bosh-lite/manifests` directory. The `make_manifest` script should have already set the deployment to the manifest, so you just have to run:
+If you followed the instructions for bosh-lite above your manifest is `v1-dummy-broker-release/bosh-lite/manifests/v1-dummy-broker-mydevenv.yml`. The `make_manifest` script should have already set the deployment to this manifest, so you just have to run:
 
     $ bosh deploy
 
