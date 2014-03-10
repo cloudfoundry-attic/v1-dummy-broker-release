@@ -114,11 +114,3 @@ Set your deployment using the deployment manifest you generated above.
 If you followed the instructions for bosh-lite above your manifest is `v1-dummy-broker-release/bosh-lite/manifests/v1-dummy-broker-mydevenv.yml`. The `make_manifest` script should have already set the deployment to this manifest, so you just have to run:
 
     $ bosh deploy
-
-### Make Dummy Service Plan Public
-
-By default new plans are private, which means they are not visible to end users. This enables an admin to test services before making them available to end users.
-
-To make a plan public, see [Making Service Plans Public](http://docs.cloudfoundry.org/services/access-control.html#make-plans-public).
-
-The plan provided by this dummy broker is called `free` for service `v1-test`.

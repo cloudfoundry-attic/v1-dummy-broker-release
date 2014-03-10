@@ -7,6 +7,13 @@ meta:
     name: bosh-warden-boshlite-ubuntu
     version: latest
 
+jobs:
+  - name: v1-dummy-broker
+    instances: 1
+    networks:
+    - name: services1
+      static_ips: (( static_ips(0) ))
+
 compilation:
   workers: 6
   network: services1

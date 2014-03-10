@@ -1,13 +1,15 @@
 director_uuid: PLACEHOLDER-DIRECTOR-UUID
-jobs:
-  - name: v1-dummy-broker
-    resource_pool: services-small
-    properties:
-      networks:
-        broker_network: services1
-      env:
-        nats_uri: nats://nats:nats@10.244.0.6:4222
-        cloud_controller_uri: http://api.10.244.0.34.xip.io
-        uaa_endpoint: https://uaa.10.244.0.34.xip.io
-        uaa_username: admin
-        uaa_password: admin
+
+properties:
+  domain: 10.244.0.34.xip.io
+
+  nats:
+    user: nats
+    password: nats
+    address: 10.244.0.6
+    port: 4222
+
+  v1-dummy-broker:
+    uaa_client_auth_credentials:
+      username: admin
+      password: admin
