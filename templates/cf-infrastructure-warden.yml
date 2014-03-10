@@ -15,15 +15,12 @@ jobs:
       static_ips: (( static_ips(0) ))
 
 compilation:
-  workers: 6
   network: services1
-  reuse_compilation_vms: true
   cloud_properties:
     name: random
 
 resource_pools:
   - name: services-small
-    size: 2
     network: services1
     stemcell: (( meta.stemcell ))
     cloud_properties:

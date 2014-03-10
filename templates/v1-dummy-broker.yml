@@ -34,11 +34,22 @@ update:
   max_in_flight: 4
   max_errors: 1
 
+compilation:
+  workers: 1
+  reuse_compilation_vms: true
+  network: (( merge ))
+  cloud_properties: (( merge ))
+
 properties:
   domain: (( merge ))
   nats: (( merge ))
   v1-dummy-broker: (( merge ))
 
+resource_pools:
+  - name: services-small
+    stemcell: (( merge ))
+    network: (( merge ))
+    size: (( auto ))
+    cloud_properties: (( merge ))
+
 networks: (( merge ))
-compilation: (( merge ))
-resource_pools: (( merge ))

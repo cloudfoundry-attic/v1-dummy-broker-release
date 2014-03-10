@@ -4,7 +4,6 @@ meta:
     version: latest
 
 compilation:
-  workers: 1
   network: v1-dummy-broker-network
   cloud_properties:
     instance_type: c1.medium
@@ -40,7 +39,6 @@ resource_pools:
   - name: services-small
     stemcell: (( meta.stemcell ))
     network: v1-dummy-broker-network
-    size: (( auto ))
     cloud_properties:
       instance_type: m1.small
       availability_zone: (( properties.template_only.aws.availability_zone ))
