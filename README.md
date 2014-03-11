@@ -31,43 +31,27 @@ To generate a deployment manifest for bosh-lite, follow the instructions [here](
 To generate a deployment manifest for AWS use the [generate_deployment_manifest](generate_deployment_manifest) script.  We recommend the following workflow:
 
 1. Run the `generate_deployment_manifest` script. You'll get some error that indicates what the missing manifest parameters are.
-1. Add those paramaters and values into the stub.  See [Hints for missing parameters in your deployment manifest stub](#hints-for-missing-parameters-in-your-deployment-manifest-stub) below.
+1. Add those parameters and values into the stub.
 1. Rinse and repeat
 1. When all necessary stub parameters are present, the script will output the deployment manifest to stdout. Pipe this output to a file in your environment directory which indicates the environment and the release, such as `~/workspace/deployments/mydevenv/cf-mysql-mydevenv.yml`.
 
-# UPDATE THIS SECTION WHEN AWS DEPLOYMENT EXISTS
 #### Example using AWS:
     $ ./generate_deployment_manifest aws ~/workspace/deployments/mydevenv/stub.yml
 
-    2013/12/16 09:57:18 error generating manifest: unresolved nodes:
-	    dynaml.MergeExpr{[jobs mysql properties admin_password]}
-	    dynaml.MergeExpr{[jobs cf-mysql-broker properties auth_username]}
-	    dynaml.MergeExpr{[jobs cf-mysql-broker properties auth_password]}
-	    dynaml.ReferenceExpr{[jobs mysql properties admin_password]}
+    2014/03/10 17:40:46 error generating manifest: unresolved nodes:
+      (( .properties.v1-dummy-broker.uaa_client_auth_credentials.username ))	in dynaml	jobs.[0].properties.env.uaa_username
+      (( .properties.v1-dummy-broker.uaa_client_auth_credentials.password ))	in dynaml	jobs.[0].properties.env.uaa_password
+      (( merge ))	in ./templates/v1-dummy-broker.yml	properties.v1-dummy-broker
 
 These errors indicate that the deployment manifest stub is missing the following fields:
 
     ---
-    jobs:
-      mysql:
-        properties:
-          admin_password: <choose_admin_password>
-      cf-mysql-broker:
-        properties:
-          auth_username:
-          auth_password:
+    properties:
+      v1-dummy-broker:
+        uaa_client_auth_credentials:
+          username: <username>
+          password: <password>
 
-# UPDATE THIS SECTION WHEN AWS DEPLOYMENT EXISTS
-#### Hints for missing parameters in your deployment manifest stub:
-
-Properties you will need to edit:
-
-- `director_uuid`: Shown by running `bosh status`
-- `admin_password`: The admin password for the MySQL server process. You should generate a secure password and configure it using this parameter.
-- `auth_username`: The username cloud controller will use to authenticate with the service broker.
-- `auth_password`: The password cloud controller will use to authenticate with the service broker.
-
-# UPDATE THIS SECTION WHEN AWS DEPLOYMENT EXISTS
 #### For AWS:
 
 You need to know the AZ and subnet id, and you will need to configure them in the stub:
