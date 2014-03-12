@@ -7,8 +7,8 @@ This project contains a BOSH release of a dummy broker that implements the minim
 Prerequisites:
 
 - A deployment of Cloud Foundry ([cf-release](https://github.com/cloudfoundry/cf-release))
-- Installing the dummy broker service requires BOSH.
-- Instructions on installing BOSH as well as Cloud Foundry (runtime) are located in the [Cloud Foundry documentation](http://docs.cloudfoundry.org).
+- Installing the dummy broker service requires BOSH
+- Instructions on installing BOSH as well as Cloud Foundry (runtime) are located in the [Cloud Foundry documentation](http://docs.cloudfoundry.org)
 
 Steps:
 
