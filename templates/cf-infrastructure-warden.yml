@@ -13,6 +13,11 @@ jobs:
     networks:
     - name: services1
       static_ips: (( static_ips(0) ))
+  - name: v1-dummy-node
+    instances: 1
+    networks:
+    - name: services1
+      static_ips: (( static_ips(1) ))
 
 compilation:
   network: services1

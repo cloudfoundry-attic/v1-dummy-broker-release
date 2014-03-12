@@ -8,5 +8,4 @@ templates:
 packages:
 - common
 - ruby
-- sqlite
 - v1-dummy-broker

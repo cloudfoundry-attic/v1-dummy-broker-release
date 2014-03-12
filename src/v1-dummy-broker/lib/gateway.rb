@@ -9,7 +9,7 @@ module Dummy
     end
 
     def default_config_file
-      template = File.expand_path('../../config/config.yml.erb', __FILE__)
+      template = File.expand_path('../../config/gateway_config.yml.erb', __FILE__)
       source = File.read(template)
       result = ERB.new(source).result
       path = File.expand_path('../../config/config.yml', __FILE__)

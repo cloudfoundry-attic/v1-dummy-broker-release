@@ -1,0 +1,12 @@
+---
+name: v1-dummy-node
+
+templates:
+  node.env.erb: config/node.env
+  node_ctl: bin/node_ctl
+
+packages:
+- common
+- ruby
+- sqlite
+- v1-dummy-broker

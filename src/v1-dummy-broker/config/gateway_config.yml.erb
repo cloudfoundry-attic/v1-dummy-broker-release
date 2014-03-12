@@ -27,8 +27,3 @@ uaa_client_auth_credentials:
   username: <%= ENV['UAA_USERNAME'] or raise('UAA_USERNAME must be set in env vars') %>
   password: <%= ENV['UAA_PASSWORD'] or raise('UAA_PASSWORD must be set in env vars') %>
 cloud_controller_uri: <%= ENV['CLOUD_CONTROLLER_URI'] or raise('CLOUD_CONTROLLER_URI must be set in env vars') %>
-
-node_id: v1-dummy-broker-node
-supported_versions: ['n/a']
-default_version: 'n/a'
-local_db: <%= ENV['LOCAL_DB'] or raise('LOCAL_DB must be set in env vars') %>

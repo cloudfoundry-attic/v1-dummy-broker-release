@@ -6,6 +6,26 @@ releases:
     version: latest
 
 jobs:
+  - name : v1-dummy-node
+    instances: 1
+    release: v1-dummy-broker
+    resource_pool: services-small
+    template:
+    - v1-dummy-node
+    networks: (( merge ))
+    properties:
+      networks:
+        broker_network: (( jobs.v1-dummy-broker.networks.[0].name ))
+      env:
+        service_unique_id: v1-dummy-broker-service
+        plan_unique_id: v1-dummy-broker-plan
+        pid_file: /var/vcap/sys/run/v1-dummy-node/v1-dummy-node.pid
+        uaa_endpoint: (( "https://uaa." .properties.domain ))
+        cloud_controller_uri: (( "https://api." .properties.domain ))
+        uaa_client_id: cf
+        uaa_username: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.username ))
+        uaa_password: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.password ))
+        nats: (( .properties.nats ))
   - name: v1-dummy-broker
     instances: 1
     release: v1-dummy-broker
