@@ -1,4 +1,4 @@
-require File.expand_path('../../lib/dummy', __FILE__)
+require 'spec_helper'
 
 describe Dummy do
   it 'defines the Dummy namespace' do

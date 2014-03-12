@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+ENV["BUNDLE_GEMFILE"] ||= File.expand_path('../../Gemfile', __FILE__)
+
+require 'bundler/setup'
+require 'vcap_services_base'
+require File.expand_path('../../lib/node', __FILE__)
+
+class Dummy::NodeBin < VCAP::Services::Base::NodeBin
+
+  def node_class
+    Dummy::Node
+  end
+
+  def default_config_file
+    path = File.expand_path('../../config/config.yml', __FILE__)
+    Pathname.new(path)
+  end
+
+  def additional_config(options, config)
+p "PLAN: #{options[:plan]}"
+
+    options
+  end
+
+end
+
+Dummy::NodeBin.new.start

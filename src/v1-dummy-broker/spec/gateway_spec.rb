@@ -1,5 +1,5 @@
 require 'securerandom'
-require File.expand_path('../../lib/dummy', __FILE__)
+require 'spec_helper'
 
 describe Dummy::Gateway do
   let(:gateway) { Dummy::Gateway.new }

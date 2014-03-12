@@ -1,0 +1,13 @@
+---
+logging:
+  level: debug
+pid: tmp/node.pid
+mbus: nats://localhost:4222/
+local_db: sqlite3:/tmp/node.db
+node_id: v1-dummy-broker-node
+supported_versions: ['n/a']
+default_version: 'n/a'
+
+database_lock_file: /tmp/v1-dummy-broker/LOCK
+disabled_file: /tmp/v1-dummy-broker/DISABLED
+service_common_dir: /tmp/v1-dummy-broker/common
