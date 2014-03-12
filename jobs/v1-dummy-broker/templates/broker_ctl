@@ -27,7 +27,7 @@ case $1 in
     cp $JOB_DIR/config/broker.env /var/vcap/packages/v1-dummy-broker/v1-dummy-broker/.env
     cd /var/vcap/packages/v1-dummy-broker/v1-dummy-broker
 
-    exec bin/start \
+    exec bin/start_gateway \
          >>$LOG_DIR/v1-dummy-broker.stdout.log \
          2>>$LOG_DIR/v1-dummy-broker.stderr.log
 

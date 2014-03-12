@@ -13,7 +13,7 @@ class BrokerRunner < ComponentRunner
 
       add_pid Process.spawn(
                 { 'AUTHORIZATION_TOKEN' => ccng_auth_token},
-                "bundle exec bin/start -c #{config_file_location}",
+                "bundle exec bin/start_gateway -c #{config_file_location}",
                 log_options(:v1_dummy_broker)
       )
       add_pid Process.spawn(
