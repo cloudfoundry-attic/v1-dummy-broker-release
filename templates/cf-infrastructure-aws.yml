@@ -10,6 +10,11 @@ compilation:
     availability_zone: (( properties.template_only.aws.availability_zone ))
 
 jobs:
+  - name: v1-dummy-node
+    instances: 1
+    networks:
+    - name: v1-dummy-broker-network
+      static_ips: (( static_ips(11) ))
   - name: v1-dummy-broker
     instances: 1
     networks:
