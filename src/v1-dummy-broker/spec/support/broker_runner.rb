@@ -42,7 +42,7 @@ class BrokerRunner < ComponentRunner
   end
 
   def config_file_location
-    "#{tmp_dir}/config/config.yml"
+    "#{tmp_dir}/config/gateway_config.yml"
   end
 
   def node_config_file_location
@@ -50,7 +50,7 @@ class BrokerRunner < ComponentRunner
   end
 
   def write_config_files
-    config_file = asset('config.yml', BROKER_SPEC_ROOT)
+    config_file = asset('gateway_config.yml', BROKER_SPEC_ROOT)
     node_config_file = asset('node_config.yml', BROKER_SPEC_ROOT)
     FileUtils.cp(config_file, config_file_location)
     FileUtils.cp(node_config_file, node_config_file_location)

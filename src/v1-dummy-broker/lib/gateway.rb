@@ -12,7 +12,7 @@ module Dummy
       template = File.expand_path('../../config/gateway_config.yml.erb', __FILE__)
       source = File.read(template)
       result = ERB.new(source).result
-      path = File.expand_path('../../config/config.yml', __FILE__)
+      path = File.expand_path('../../config/gateway_config.yml', __FILE__)
       File.open(path, 'w+') do |f|
         f.write(result)
       end

@@ -16,7 +16,7 @@ describe Dummy::Gateway do
 
   describe '#default_config_file' do
     it 'returns a Pathname pointing to the configuration file' do
-      path = File.expand_path('../../config/config.yml', __FILE__)
+      path = File.expand_path('../../config/gateway_config.yml', __FILE__)
       expect(gateway.default_config_file).to eql(Pathname.new(path))
       expect(File.exist?(path)).to be_true
     end
