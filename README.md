@@ -16,6 +16,7 @@ Steps:
 1. Create a BOSH release
 1. Upload the release to the BOSH director
 1. Deploy the release with BOSH
+1. Create a service auth token for the service
 1. Make the plan public
 
 The dummy broker service should now be advertised when running `cf marketplace`
@@ -98,3 +99,14 @@ Set your deployment using the deployment manifest you generated above.
 If you followed the instructions for bosh-lite above your manifest is `v1-dummy-broker-release/bosh-lite/manifests/v1-dummy-broker-mydevenv.yml`. The `make_manifest` script should have already set the deployment to this manifest, so you just have to run:
 
     $ bosh deploy
+
+### Create a service auth token
+In order to create/delete instances of a service, the cloud controller must have the auth token of the service. In our case,
+the gateway was deployed with the auth token as part of its configuration: look in the `service_auth_tokens.dummy_test` section
+of `gateway_config.yml.erb`.
+
+Before you can create the auth token, you have to log in as an admin.
+
+When you're ready, create the record of that token in the cloud controller with the following command:
+
+    cf create-service-auth-token v1-test pivotal-software <the token>
