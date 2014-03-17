@@ -23,6 +23,6 @@ var _ = Describe("Catalog Update", func() {
 			Expect(session).NotTo(Say("v1-test.*free"))
 
 			// with retry and a 90s timeout, assert that the service and plan appear in CC with the correct information
-			Eventually(CallingCf("marketplace"), 90).Should(Say("v1-test.*free"))
+			Eventually(CallingCf("marketplace"), 90, 5).Should(Say("v1-test.*free"))
 		})
 	})
