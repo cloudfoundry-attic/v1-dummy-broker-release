@@ -102,8 +102,8 @@ If you followed the instructions for bosh-lite above your manifest is `v1-dummy-
 
 ### Create a service auth token
 In order to create/delete instances of a service, the cloud controller must have the auth token of the service. In our case,
-the gateway was deployed with the auth token as part of its configuration: look in the `service_auth_tokens.dummy_test` section
-of `gateway_config.yml.erb`.
+the gateway was deployed with the auth token as part of its configuration: look in the `properties.env.service_auth_tokens` section
+of `v1-dummy-broker.yml` in template.
 
 Before you can create the auth token, you have to log in as an admin.
 
