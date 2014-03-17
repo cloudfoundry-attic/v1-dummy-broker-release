@@ -9,11 +9,12 @@ blobs
 .DS_Store
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
-*.swp
-*~
-*#
-#*
 src/v1-dummy-broker/config/config.yml
 bosh-lite/manifests
 bosh-lite/tmp
 src/v1-dummy-broker/tmp
+*.xml
+*.swp
+*~
+*#
+#*
