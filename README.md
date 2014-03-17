@@ -110,3 +110,7 @@ Before you can create the auth token, you have to log in as an admin.
 When you're ready, create the record of that token in the cloud controller with the following command:
 
     cf create-service-auth-token v1-test pivotal-software <the token>
+
+### Acceptance Tests
+For instructions on running the acceptance tests in ./acceptance_tests, see [the instructions for cf-acceptance-tests](https://github.com/cloudfoundry/cf-acceptance-tests/blob/master/README.md)
+NOTE: These acceptance tests cannot be run in parallel, and --node=1 is hard-coded.
