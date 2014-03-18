@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/config"
 	. "github.com/onsi/ginkgo"
 	ginkgoconfig "github.com/onsi/ginkgo/config"
 	"github.com/onsi/ginkgo/reporters"
 	. "github.com/onsi/gomega"
 	. "github.com/vito/cmdtest/matchers"
-  "github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/config"
 
 	. "github.com/pivotal-cf-experimental/cf-test-helpers/cf"
 )
@@ -23,7 +23,11 @@ func TestServices(t *testing.T) {
 	RegisterFailHandler(Fail)
 
 	CreateHomeConfig()
-	RunSpecsWithDefaultAndCustomReporters(t, "Tests", []Reporter{reporters.NewJUnitReporter(fmt.Sprintf("junit_%d.xml", ginkgoconfig.GinkgoConfig.ParallelNode))})
+	RunSpecsWithDefaultAndCustomReporters(t, "Tests", []Reporter{
+		reporters.NewJUnitReporter(
+			fmt.Sprintf("../results/%s-junit_%d.xml", "Tests", ginkgoconfig.GinkgoConfig.ParallelNode),
+		),
+	})
 	RemoveHomeConfig()
 }
 

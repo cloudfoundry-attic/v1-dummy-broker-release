@@ -18,4 +18,10 @@ gocart  install
 
 go install github.com/onsi/ginkgo/ginkgo
 
+echo "Formatting code..."
+(
+  cd tests
+  go fmt
+)
+
 ginkgo -r -v -slowSpecThreshold=300 --nodes=1 "$@" # don't run tests in parallel
