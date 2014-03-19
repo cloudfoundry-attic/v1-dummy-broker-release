@@ -1,3 +1,5 @@
+acceptance_tests/integration_config.json
+acceptance_tests/setup_env.sh
 config/dev.yml
 config/private.yml
 releases/*.tgz
