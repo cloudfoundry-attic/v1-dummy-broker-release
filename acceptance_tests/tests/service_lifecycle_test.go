@@ -25,4 +25,17 @@ var _ = Describe("Service Lifecycle", func() {
 		//check that the service instance exists
 		Expect(Cf("services")).To(Say(serviceInstanceName))
 	})
+
+	It("binds service instances to apps successfully", func() {
+		serviceInstanceName := fmt.Sprintf("test-service-%d", rand.Intn(999999))
+		appName := fmt.Sprintf("test-app-%d", rand.Intn(999999))
+		Expect(Cf("services")).NotTo(Say(serviceInstanceName))
+		Expect(Cf("apps")).NotTo(Say(appName))
+
+		Expect(Cf("create-service", "v1-test", "free", serviceInstanceName)).To(ExitWithTimeout(0, 10*time.Second))
+		Expect(Cf("push", appName, "-p", NewAssets().EnvApp)).To(Say("App started"))
+
+		Expect(Cf("bind-service", appName, serviceInstanceName)).To(Say("OK"))
+		Expect(Cf("restart", appName)).To(Say("App started"))
+	})
 })
