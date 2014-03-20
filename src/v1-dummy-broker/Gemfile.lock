@@ -194,5 +194,6 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   dotenv
+  eventmachine_httpserver
   rspec
   vcap_services_base (~> 0.2.9)!

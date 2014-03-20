@@ -29,6 +29,8 @@ uaa_client_auth_credentials:
 cloud_controller_uri: <%= ENV['CLOUD_CONTROLLER_URI'] or raise('CLOUD_CONTROLLER_URI must be set in env vars') %>
 
 node_id: v1-dummy-broker-node
+<% app_domain = ENV['APP_DOMAIN'] || raise("APP_DOMAIN must be set in env vars") %>
+external_url: <%= app_domain == 'localhost' ? app_domain : "dummy-node.#{app_domain}" %>
 supported_versions: ['n/a']
 default_version: 'n/a'
 local_db: <%= ENV['NODE_DB'] or raise('NODE_DB must be set in env vars') %>
