@@ -1,4 +1,4 @@
-check process broker
+check process node
   with pidfile /var/vcap/sys/run/v1-dummy-node/v1-dummy-node.pid
   start program "/var/vcap/jobs/v1-dummy-node/bin/node_ctl start" with timeout 60 seconds
   stop program "/var/vcap/jobs/v1-dummy-node/bin/node_ctl stop" with timeout 60 seconds
