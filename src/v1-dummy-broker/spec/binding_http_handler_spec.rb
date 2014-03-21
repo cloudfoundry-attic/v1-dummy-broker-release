@@ -36,6 +36,13 @@ describe BindingHttpHandler do
       @instance_name_2 = instance_manager.provision['name']
       @secret_1 = instance_manager.bind(@instance_name_1)['secret']
       @secret_2 = instance_manager.bind(@instance_name_2)['secret']
+
+      # Bind and unbind before request
+      @unbound_instance_name = instance_manager.provision['name']
+      @stale_credentials = instance_manager.bind(@unbound_instance_name)
+      @stale_secret = @stale_credentials['secret']
+      instance_manager.unbind(@stale_credentials)
+
     end
 
     it 'returns the large number associated with the service instance' do
@@ -67,10 +74,10 @@ describe BindingHttpHandler do
       handler.process_http_request
 
       expect(response).to have_received(:status=).with(404)
-      expect(response).to have_received(:content=).with("")
+      expect(response).to have_received(:content=).with("404 Not Found")
     end
 
-    it 'returns a 404 when the requester does not provide any credentials' do
+    it 'returns a 401 when the requester does not provide any credentials' do
       handler.instance_variable_set(:@http_headers, "Other-Header: asdfasdfasdf")
       handler.instance_variable_set(:@http_request_uri, "/#{@instance_name_1}")
 
@@ -79,11 +86,11 @@ describe BindingHttpHandler do
 
       handler.process_http_request
 
-      expect(response).to have_received(:status=).with(404)
-      expect(response).to have_received(:content=).with("")
+      expect(response).to have_received(:status=).with(401)
+      expect(response).to have_received(:content=).with("401 Unauthorized")
     end
 
-    it 'returns a 404 when the requester does not have the right credentials' do
+    it 'returns a 401 when the requester does not have the right credentials' do
       auth_string = Base64.encode64("login:#{@secret_2}")
       handler.instance_variable_set(:@http_headers, "Authorization: Basic #{auth_string}")
       handler.instance_variable_set(:@http_request_uri, "/#{@instance_name_1}")
@@ -93,13 +100,27 @@ describe BindingHttpHandler do
 
       handler.process_http_request
 
-      expect(response).to have_received(:status=).with(404)
-      expect(response).to have_received(:content=).with("")
+      expect(response).to have_received(:status=).with(401)
+      expect(response).to have_received(:content=).with("401 Unauthorized")
+    end
+
+    it 'returns a 403 if the instance is unbound' do
+      auth_string = Base64.encode64("login:#{@stale_secret}")
+      handler.instance_variable_set(:@http_headers, "Authorization: Basic #{auth_string}")
+      handler.instance_variable_set(:@http_request_uri, "/#{@unbound_instance_name}")
+
+      allow(response).to receive(:status=)
+      allow(response).to receive(:content=)
+
+      handler.process_http_request
+
+      expect(response).to have_received(:status=).with(403)
+      expect(response).to have_received(:content=).with("403 Forbidden")
     end
 
     it 'returns a 400 if the request is malformed'
 
-    it 'returns a 500 if an unhandle error occurs' do
+    it 'returns a 500 if an unhandled error occurs' do
       handler.instance_variable_set(:@http_request_uri, "/#{@instance_name_1}")
       allow(instance_manager).to receive(:instances).and_raise(RuntimeError)
 
@@ -109,7 +130,7 @@ describe BindingHttpHandler do
       handler.process_http_request
 
       expect(response).to have_received(:status=).with(500)
-      expect(response).to have_received(:content=).with("Internal Server Error")
+      expect(response).to have_received(:content=).with("500 Internal Server Error")
     end
 
     it 'returns the same large number and requires the same credentials when the service instance has two service bindings' do

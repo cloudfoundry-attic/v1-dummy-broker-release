@@ -50,6 +50,22 @@ describe Dummy::Node do
     end
   end
 
+
+  describe 'unbind' do
+    it 'delegates to the instance manager' do
+      credentials = {
+        'host' => "",
+        'port' => 8080,
+        'login' => "",
+        'secret' => "",
+        'url' => ""
+      }
+      allow(instance_manager).to receive(:unbind)
+      node.unbind(credentials)
+      expect(instance_manager).to have_received(:unbind).with(credentials)
+    end
+  end
+
   describe '#service_name' do
     it 'returns the name of the service' do
       expect(node.service_name).to eql('Dummy')

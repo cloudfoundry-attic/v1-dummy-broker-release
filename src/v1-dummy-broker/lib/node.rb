@@ -37,6 +37,10 @@ module Dummy
       @instance_manager.bind(name)
     end
 
+    def unbind(credentials)
+      @instance_manager.unbind(credentials)
+    end
+
     def instances
       @instance_manager.instances
     end

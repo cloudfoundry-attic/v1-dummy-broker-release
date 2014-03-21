@@ -13,12 +13,14 @@ class BindingHttpHandler < EM::Connection
   def process_http_request
     instance_name = parse_instance_name_from_request_uri
     @logger.info("Request made for instance #{instance_name}")
-    return send_404 unless @instance_manager.instances[instance_name]
+    return send_http_resp(404, "Not Found") unless @instance_manager.instances[instance_name]
+
+    return send_http_resp(403, "Forbidden") unless @instance_manager.bindings[instance_name]
 
     headers = parse_headers
     secret = parse_basic_auth_params(headers)
     @logger.info("Request included credentials #{secret}")
-    return send_404 unless secret && @instance_manager.bindings[instance_name]['secret'] == secret
+    return send_http_resp(401, "Unauthorized") unless secret && @instance_manager.bindings[instance_name]['secret'] == secret
 
     large_number = @instance_manager.instances[instance_name]
     @logger.info("Rendering 200 with body: #{large_number}")
@@ -29,21 +31,17 @@ class BindingHttpHandler < EM::Connection
     response.send_response
   rescue => e
     @logger.info("Unhandled error: #{e.message}")
-    response = EM::DelegatedHttpResponse.new(self)
-    response.status = 500
-    response.content_type 'text/html'
-    response.content = "Internal Server Error"
-    response.send_response
+    send_http_resp(500, "Internal Server Error")
   end
 
   private
 
-  def send_404
-    @logger.info("Rendering 404")
+  def send_http_resp(code, content)
+    @logger.info("Rendering #{code}")
     response = EM::DelegatedHttpResponse.new(self)
-    response.status = 404
+    response.status = code
     response.content_type 'text/html'
-    response.content = ""
+    response.content = "#{code} #{content}"
     response.send_response
   end
 
