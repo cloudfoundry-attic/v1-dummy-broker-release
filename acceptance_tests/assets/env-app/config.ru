@@ -1,6 +1,7 @@
+require 'json'
+
 app = lambda do |env|
-  body = "Hello, world!\n"
-  body += "ENV: #{ENV.inspect}"
+  body = "#{ENV.to_hash.to_json}"
 
   [ 200,
     { "Content-Type" => "text/plain",

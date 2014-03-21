@@ -20,7 +20,7 @@ module Dummy
     end
 
     def additional_config(options, config)
-      options
+      options.merge(external_url: config['external_url'])
     end
 
   end

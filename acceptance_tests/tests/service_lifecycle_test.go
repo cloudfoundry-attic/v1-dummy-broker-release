@@ -37,5 +37,14 @@ var _ = Describe("Service Lifecycle", func() {
 
 		Expect(Cf("bind-service", appName, serviceInstanceName)).To(Say("OK"))
 		Expect(Cf("restart", appName)).To(Say("App started"))
+
+//		services_info := FetchServicesInfo("http://test-app-725953.10.244.0.34.xip.io	", "v1-test-n/a")
+//
+//		Expect(services_info["name"]).To(Equal(serviceInstanceName))
+//
+//		credentials := services_info["credentials"].(map[string]interface{})
+//		instance_url := ConstructServiceInstanceUrl(credentials)
+
+
 	})
 })

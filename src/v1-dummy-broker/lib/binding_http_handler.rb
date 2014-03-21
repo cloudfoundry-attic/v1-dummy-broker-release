@@ -2,9 +2,9 @@ require 'evma_httpserver'
 require 'base64'
 
 class BindingHttpHandler < EM::Connection
-  def initialize(node)
-    @node = node
-    @logger = node.logger
+  def initialize(instance_manager)
+    @instance_manager = instance_manager
+    @logger = instance_manager.logger
     super()
   end
 
@@ -13,21 +13,27 @@ class BindingHttpHandler < EM::Connection
   def process_http_request
     instance_name = parse_instance_name_from_request_uri
     @logger.info("Request made for instance #{instance_name}")
-    return send_404 unless @node.instances[instance_name]
+    return send_404 unless @instance_manager.instances[instance_name]
 
     headers = parse_headers
     secret = parse_basic_auth_params(headers)
     @logger.info("Request included credentials #{secret}")
-    return send_404 unless @node.bindings[instance_name]['secret'] == secret
+    return send_404 unless secret && @instance_manager.bindings[instance_name]['secret'] == secret
 
-    large_number = @node.instances[instance_name]
+    large_number = @instance_manager.instances[instance_name]
     @logger.info("Rendering 200 with body: #{large_number}")
     response = EM::DelegatedHttpResponse.new(self)
     response.status = 200
     response.content_type 'text/html'
     response.content = large_number
     response.send_response
-
+  rescue => e
+    @logger.info("Unhandled error: #{e.message}")
+    response = EM::DelegatedHttpResponse.new(self)
+    response.status = 500
+    response.content_type 'text/html'
+    response.content = "Internal Server Error"
+    response.send_response
   end
 
   private
@@ -58,7 +64,10 @@ class BindingHttpHandler < EM::Connection
   end
 
   def parse_basic_auth_params(headers)
-    base64 = headers["Authorization"].gsub("Basic ", "")
+    auth_header = headers["Authorization"]
+    return nil unless auth_header
+
+    base64 = auth_header.gsub("Basic ", "")
     _, secret = Base64.decode64(base64).split(":")
     secret
   end

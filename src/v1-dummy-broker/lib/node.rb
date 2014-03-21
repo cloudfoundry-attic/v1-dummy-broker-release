@@ -1,35 +1,25 @@
-require File.expand_path('../binding_http_handler', __FILE__)
+require File.expand_path('../bindings_api_server', __FILE__)
+require File.expand_path('../instance_manager', __FILE__)
+require 'cf-registrar'
 require 'securerandom'
 
 module Dummy
   class Node < VCAP::Services::Base::Node
 
-    attr_accessor :instances, :bindings
-    attr_reader :logger
+    attr_reader :instance_manager
 
     def initialize(opts)
       super(opts)
-      @instances = {}
-      @bindings = {}
+      port = VCAP.grab_ephemeral_port
+      opts = opts.merge(logger: @logger, port: port)
 
-      @host = opts[:ip_route]
-      @port = VCAP.grab_ephemeral_port
-
-      @logger.info("Starting server on #{@host}:#{@port}")
-      EM.start_server @host, @port, BindingHttpHandler, self
+      @instance_manager = InstanceManager.new(opts)
+      @bindings_api = BindingsApiServer.new(@instance_manager, opts)
+      @bindings_api.start!
     end
 
     def service_name
       'Dummy'
-    end
-
-    def provision(plan, credentials=nil, version=nil)
-      service_id = SecureRandom.uuid
-      large_number = SecureRandom.uuid
-      instances[service_id] = large_number
-      logger.info("Provisioning a new instance #{service_id} with large number: #{large_number}")
-
-      {'name'=> service_id}
     end
 
     def announcement
@@ -39,22 +29,20 @@ module Dummy
       }
     end
 
-    def bind(name, bind_opts={})
-      logger.info("Creating a binding instance #{name}")
-      unless @bindings[name]
-        binding = {
-          'secret' => SecureRandom.uuid
-        }
+    def provision(plan, credentials=nil, version=nil)
+      @instance_manager.provision
+    end
 
-        @bindings[name] = binding
-      end
+    def bind(name, bind_opts={}, credentials=nil)
+      @instance_manager.bind(name)
+    end
 
-      {
-        'host' => @host,
-        'port' => @port,
-        'login' => 'binding',
-        'secret' => @bindings[name]['secret']
-      }
+    def instances
+      @instance_manager.instances
+    end
+
+    def bindings
+      @instance_manager.bindings
     end
   end
 end
