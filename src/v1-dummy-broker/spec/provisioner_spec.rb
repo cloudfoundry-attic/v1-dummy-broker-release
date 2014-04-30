@@ -5,8 +5,12 @@ describe Dummy::Provisioner do
   let(:options)     { gateway.provisioner_config }
   let(:gateway)     { Dummy::Gateway.new.tap { |g| g.load_config } }
 
-  before { Thread.new { EM.run {} } }
-  after  { EM.stop }
+  around do |example|
+    EM.run do
+      example.call
+      EM.stop
+    end
+  end
 
   describe '#initialize' do
     it 'takes a set of options' do
