@@ -11,8 +11,8 @@ describe BindingHttpHandler do
       }
 
       EM.run do
-        expect{ EM.start_server '0.0.0.0', nil, BindingHttpHandler }.to raise_error ArgumentError
-        expect{ EM.start_server '0.0.0.0', nil, BindingHttpHandler, InstanceManager.new(opts) }.not_to raise_error
+        expect{ EM.start_server '0.0.0.0', 0, BindingHttpHandler }.to raise_error ArgumentError
+        expect{ EM.start_server '0.0.0.0', 0, BindingHttpHandler, InstanceManager.new(opts) }.not_to raise_error
         EM.stop
       end
     end
