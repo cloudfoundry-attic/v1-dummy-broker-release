@@ -1,6 +1,10 @@
 package helpers
 
 import (
+	"time"
+	"fmt"
+
+	"github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gexec"
 
@@ -39,7 +43,7 @@ func (e *Environment) Setup() {
 
 	cf.AsUser(e.Context.AdminUserContext(), func() {
 		setUpSpaceWithUserAccess(e.Context.RegularUserContext())
-		Eventually(cf.Cf("create-service-auth-token", e.ServiceInfo.ServiceName, e.ServiceInfo.ServiceProvider, e.ServiceInfo.ServiceAuthToken), 60).Should(Exit(0))
+		createAuthToken(e.ServiceInfo)
 	})
 
 	e.originalCfHomeDir, e.currentCfHomeDir = cf.InitiateUserContext(e.Context.RegularUserContext())
@@ -47,13 +51,8 @@ func (e *Environment) Setup() {
 }
 
 func (e *Environment) Teardown() {
-	e.Context.Teardown()
-
-	cf.AsUser(e.Context.AdminUserContext(), func() {
-		Eventually(cf.Cf("delete-service-auth-token", e.ServiceInfo.ServiceName, e.ServiceInfo.ServiceProvider, "-f"), 60).Should(Exit(0))
-	})
-
 	cf.RestoreUserContext(e.Context.RegularUserContext(), e.originalCfHomeDir, e.currentCfHomeDir)
+	e.Context.Teardown()
 }
 
 func setUpSpaceWithUserAccess(uc cf.UserContext) {
@@ -62,4 +61,17 @@ func setUpSpaceWithUserAccess(uc cf.UserContext) {
 	Eventually(cf.Cf("set-space-role", uc.Username, uc.Org, uc.Space, "SpaceManager"), spaceSetupTimeout).Should(Exit(0))
 	Eventually(cf.Cf("set-space-role", uc.Username, uc.Org, uc.Space, "SpaceDeveloper"), spaceSetupTimeout).Should(Exit(0))
 	Eventually(cf.Cf("set-space-role", uc.Username, uc.Org, uc.Space, "SpaceAuditor"), spaceSetupTimeout).Should(Exit(0))
+}
+
+func createAuthToken(serviceInfo ServiceInfo) {
+	createAuthTokenSession := cf.Cf("create-service-auth-token", serviceInfo.ServiceName, serviceInfo.ServiceProvider, serviceInfo.ServiceAuthToken)
+
+	select {
+	case <-createAuthTokenSession.Out.Detect("OK"):
+	case <-createAuthTokenSession.Out.Detect("The service auth token label is taken"):
+		fmt.Println("It is ok that the create-service-auth-token command failed.  This just means the token is already in place.")
+	case <-time.After(60 * time.Second):
+		ginkgo.Fail("Failed to create auth token")
+	}
+	createAuthTokenSession.Out.CancelDetects()
 }
