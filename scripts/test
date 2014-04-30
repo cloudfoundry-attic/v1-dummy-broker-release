@@ -1,0 +1,4 @@
+(
+  cd src/v1-dummy-broker
+  bundle exec rspec spec
+)
