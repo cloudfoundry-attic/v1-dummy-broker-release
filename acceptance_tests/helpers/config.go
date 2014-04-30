@@ -7,7 +7,6 @@ import (
 
 type IntegrationConfig struct {
 	AppsDomain        string `json:"apps_domain"`
-	SystemDomain      string `json:"system_domain"`
 	ApiEndpoint       string `json:"api"`
 
 	AdminUser         string `json:"admin_user"`
