@@ -46,5 +46,8 @@ var _ = Describe("Service Lifecycle", func() {
 		Expect(resp.StatusCode).To(Equal(403), "should not have been able to access the service instance using credentials from a deleted binding")
 
 		Eventually(Cf("delete-service", "-f", serviceInstanceName), defaultTimeout).Should(Exit(0))
+
+		resp, _ = http.Get(instance_url)
+		Expect(resp.StatusCode).To(Equal(404), "should not have been able to access the service instance url for a deleted instance")
 	})
 })

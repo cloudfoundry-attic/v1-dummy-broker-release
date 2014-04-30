@@ -65,7 +65,7 @@ describe BindingHttpHandler do
       expect(response).to have_received(:content=).with(instance_manager.instances[@instance_name_2])
     end
 
-    it 'returns a 404 when the service is not bound' do
+    it 'returns a 404 when the service does not exist' do
       handler.instance_variable_set(:@http_request_uri, "/non-existent")
 
       allow(response).to receive(:status=)

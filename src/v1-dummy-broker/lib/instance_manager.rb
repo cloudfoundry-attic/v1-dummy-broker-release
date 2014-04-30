@@ -22,6 +22,16 @@ class InstanceManager
     {'name'=> service_id}
   end
 
+  def unprovision(service_id)
+    logger.info("Requested unprovision for #{service_id}")
+    return false if bindings[service_id]
+
+    instances.delete(service_id)
+    logger.info("Unprovisioned instance #{service_id}")
+
+    true
+  end
+
   def bind(name)
     logger.info("Creating a binding for instance #{name}")
     if bindings[name]
@@ -46,6 +56,8 @@ class InstanceManager
   end
 
   def unbind(credentials)
+    logger.info("Requested unbind for #{credentials.inspect}")
+
     name = credentials['name']
     return false unless binding = bindings[name]
 
@@ -53,6 +65,8 @@ class InstanceManager
     if binding['num_bindings'] == 0
       bindings.delete(name)
     end
+
+    logger.info("Did unbind for #{credentials.inspect}")
 
     true
   end

@@ -23,7 +23,6 @@ describe InstanceManager do
       expect(instance_manager.instances).to_not be_empty
     end
 
-
     it 'returns the instance id' do
       result = instance_manager.provision
       expect(result).to eq({ 'name' => instance_manager.instances.keys.first })
@@ -138,6 +137,37 @@ describe InstanceManager do
         expect(instance_manager.bindings[name]).to have_key 'num_bindings'
         expect(instance_manager.bindings[name]['num_bindings']).to eq 1
         expect(response).to be_true
+      end
+    end
+  end
+
+  describe 'unprovision' do
+    let!(:service_id) { instance_manager.provision['name'] }
+
+    it 'removes the service instance id' do
+      expect(instance_manager.instances[service_id]).to_not be_nil
+
+      instance_manager.unprovision(service_id)
+      expect(instance_manager.instances[service_id]).to be_nil
+    end
+
+    it 'returns true' do
+      expect(instance_manager.unprovision(service_id)).to be_true
+    end
+
+    context 'when the service instance does not exist' do
+      it 'returns true' do
+        expect(instance_manager.unprovision('does not exist')).to be_true
+      end
+    end
+
+    context 'when bindings for the instance exist' do
+      before do
+        instance_manager.bind(service_id)
+      end
+
+      it 'returns false' do
+        expect(instance_manager.unprovision(service_id)).to be_false
       end
     end
   end

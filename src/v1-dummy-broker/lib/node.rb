@@ -41,6 +41,10 @@ module Dummy
       @instance_manager.unbind(credentials)
     end
 
+    def unprovision(name, bindings=nil)
+      @instance_manager.unprovision(name)
+    end
+
     def instances
       @instance_manager.instances
     end

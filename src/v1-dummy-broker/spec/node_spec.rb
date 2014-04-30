@@ -50,7 +50,6 @@ describe Dummy::Node do
     end
   end
 
-
   describe 'unbind' do
     it 'delegates to the instance manager' do
       credentials = {
@@ -63,6 +62,16 @@ describe Dummy::Node do
       allow(instance_manager).to receive(:unbind)
       node.unbind(credentials)
       expect(instance_manager).to have_received(:unbind).with(credentials)
+    end
+  end
+
+  describe 'unprovision' do
+    it 'delegates to the instance manager' do
+      allow(instance_manager).to receive(:unprovision)
+      id = SecureRandom.uuid
+
+      node.unprovision(id)
+      expect(instance_manager).to have_received(:unprovision).with(id)
     end
   end
 

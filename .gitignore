@@ -11,7 +11,7 @@ blobs
 .DS_Store
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
-src/v1-dummy-broker/config/config.yml
+src/v1-dummy-broker/config/gateway_config.yml
 bosh-lite/manifests
 bosh-lite/tmp
 src/v1-dummy-broker/tmp
