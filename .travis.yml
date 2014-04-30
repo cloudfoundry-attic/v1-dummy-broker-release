@@ -3,3 +3,10 @@ rvm:
   - '1.9.3'
   - '2.0.0'
 script: ./scripts/test
+branches:
+  except:
+    - dijon-deployed
+    - dijon-passed
+    - a1-deployed
+    - release-candidate
+    - tabasco-deployed
