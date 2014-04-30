@@ -15,6 +15,7 @@ src/v1-dummy-broker/config/gateway_config.yml
 bosh-lite/manifests
 bosh-lite/tmp
 src/v1-dummy-broker/tmp
+src/v1-dummy-broker/coverage
 *.xml
 *.swp
 *~

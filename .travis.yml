@@ -1,7 +1,7 @@
 language: ruby
 rvm:
-  - '1.9.3'
-  - '2.0.0'
+- 1.9.3
+- 2.0.0
 script: ./scripts/test
 branches:
   except:
@@ -10,3 +10,6 @@ branches:
     - a1-deployed
     - release-candidate
     - tabasco-deployed
+env:
+  global:
+    secure: fEIbsrV3Hb1kPCGlXm/VFLzVln6x0Sz0+qkTS2bydJ3PRCOxvibDkzxytvVeUfkyI3POzOFHQVs9kPZgH1Jut9MpdYF38+WR6umiwGqmo/NG+WaNolsGXH2GReJKzZlIs39qrkE0APbnw97kCw7vlzyd706ss0wQ5QGPzuvkH34=

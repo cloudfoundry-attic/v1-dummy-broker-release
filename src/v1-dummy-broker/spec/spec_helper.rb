@@ -1,3 +1,6 @@
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 BROKER_SPEC_ROOT = File.dirname(__FILE__)
 
 require File.expand_path('../../lib/dummy', __FILE__)
