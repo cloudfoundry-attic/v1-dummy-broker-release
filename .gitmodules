@@ -6,4 +6,4 @@
 	url = https://github.com/cloudfoundry/shared-release-packages.git
 [submodule "src/v1-dummy-broker/vendor/integration-test-support"]
 	path = src/v1-dummy-broker/vendor/integration-test-support
-	url = git@github.com:cloudfoundry/integration-test-support.git
+	url = https://github.com/cloudfoundry/integration-test-support.git
