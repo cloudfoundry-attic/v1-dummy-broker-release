@@ -5,11 +5,19 @@ describe Dummy::Provisioner do
   let(:options)     { gateway.provisioner_config }
   let(:gateway)     { Dummy::Gateway.new.tap { |g| g.load_config } }
 
-  around do |example|
-    EM.run do
-      example.call
-      EM.stop
-    end
+  # Travis is having problems with EventMachine, so we need to stub it out for these tests
+  let(:conn)        { double('conn', on_connect: nil)}
+  let(:fake_em)     { double('em', connect: conn, add_periodic_timer: nil, add_timer: nil) }
+
+  before do
+    @old_em = EventMachine
+    EM = fake_em
+    EventMachine = fake_em
+  end
+
+  after do
+    EM = @old_em
+    EventMachine = @old_em
   end
 
   describe '#initialize' do
