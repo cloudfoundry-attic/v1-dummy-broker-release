@@ -1,50 +1,50 @@
 package tests
 
 import (
-	"fmt"
-	. "github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega/gexec"
 	. "github.com/pivotal-cf-experimental/cf-test-helpers/cf"
-	. "github.com/vito/cmdtest/matchers"
-	"math/rand"
-	"time"
+	. "github.com/pivotal-cf-experimental/cf-test-helpers/generator"
+	"net/http"
+
+	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"
 )
 
 var _ = Describe("Service Lifecycle", func() {
+
+	defaultTimeout := 60
+	var appName string
+
 	BeforeEach(func() {
-		LoginAsUser()
-		rand.Seed(time.Now().UTC().UnixNano())
+		appName = RandomName()
+
+		Eventually(Cf("push", appName, "-m", "256M", "-p", helpers.NewAssets().TestApp, "-no-start"), defaultTimeout).Should(Exit(0))
 	})
 
-	It("create service instance successfully", func() {
-		serviceInstanceName := fmt.Sprintf("test-service-%d", rand.Intn(999999))
-		Expect(Cf("services")).NotTo(Say(serviceInstanceName))
-		//create service instance
-		Expect(Cf("create-service", "v1-test", "free", serviceInstanceName)).To(ExitWithTimeout(0, 10*time.Second))
-		//check that the service instance exists
-		Expect(Cf("services")).To(Say(serviceInstanceName))
+	AfterEach(func() {
+		Eventually(Cf("delete", appName, "-f"), defaultTimeout).Should(Exit(0))
 	})
 
-	It("binds service instances to apps successfully", func() {
-		serviceInstanceName := fmt.Sprintf("test-service-%d", rand.Intn(999999))
-		appName := fmt.Sprintf("test-app-%d", rand.Intn(999999))
-		Expect(Cf("services")).NotTo(Say(serviceInstanceName))
-		Expect(Cf("apps")).NotTo(Say(appName))
+	It("Allows users to create, bind, write to, read from, unbind, and destroy the service instance", func() {
+		serviceInstanceName := RandomName()
 
-		Expect(Cf("create-service", "v1-test", "free", serviceInstanceName)).To(ExitWithTimeout(0, 10*time.Second))
-		Expect(Cf("push", appName, "-p", NewAssets().EnvApp)).To(Say("App started"))
+		Eventually(Cf("create-service", environment.ServiceInfo.ServiceName, environment.ServiceInfo.PlanName, serviceInstanceName), defaultTimeout).Should(Exit(0))
+		Eventually(Cf("bind-service", appName, serviceInstanceName), defaultTimeout).Should(Exit(0))
 
-		Expect(Cf("bind-service", appName, serviceInstanceName)).To(Say("OK"))
-		Expect(Cf("restart", appName)).To(Say("App started"))
+		fiveMinutes := 5 * 60
+		Eventually(Cf("start", appName), fiveMinutes).Should(Exit(0))
 
-//		services_info := FetchServicesInfo("http://test-app-725953.10.244.0.34.xip.io	", "v1-test-n/a")
-//
-//		Expect(services_info["name"]).To(Equal(serviceInstanceName))
-//
-//		credentials := services_info["credentials"].(map[string]interface{})
-//		instance_url := ConstructServiceInstanceUrl(credentials)
+		instance_url := helpers.GetInstanceUrl(AppUri(appName))
 
+		resp, _ := http.Get(instance_url)
+		Expect(resp.StatusCode).To(Equal(200), "unable to use the credentials provided by the binding to access the service instance")
 
+		Eventually(Cf("unbind-service", appName, serviceInstanceName), defaultTimeout).Should(Exit(0))
+
+		resp, _ = http.Get(instance_url)
+		Expect(resp.StatusCode).To(Equal(403), "should not have been able to access the service instance using credentials from a deleted binding")
+
+		Eventually(Cf("delete-service", "-f", serviceInstanceName), defaultTimeout).Should(Exit(0))
 	})
 })

@@ -1,11 +1,11 @@
 package helpers
 
 type Assets struct {
-	EnvApp string
+	TestApp string
 }
 
 func NewAssets() Assets {
 	return Assets{
-		EnvApp: "../assets/env-app",
+		TestApp: "../assets/env-app",
 	}
 }

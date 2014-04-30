@@ -2,44 +2,46 @@ package tests
 
 import (
 	"fmt"
-	"os"
-	"strconv"
 	"testing"
 
-	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/config"
+	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"
+
 	. "github.com/onsi/ginkgo"
 	ginkgoconfig "github.com/onsi/ginkgo/config"
 	"github.com/onsi/ginkgo/reporters"
 	. "github.com/onsi/gomega"
-	. "github.com/vito/cmdtest/matchers"
-
-	. "github.com/pivotal-cf-experimental/cf-test-helpers/cf"
 )
 
-var IntegrationConfig = config.Load()
-var homePath string
+var environment *helpers.Environment
 
 func TestServices(t *testing.T) {
 	RegisterFailHandler(Fail)
 
-	CreateHomeConfig()
+	config := helpers.LoadConfig()
+	context := helpers.NewContext(config)
+	serviceInfo := helpers.ServiceInfo{
+		ServiceName:      "v1-test",
+		ServiceProvider:  "pivotal-software",
+		PlanName:         "free",
+		ServiceAuthToken: config.ServiceAuthToken,
+	}
+	environment = helpers.NewEnvironment(context, serviceInfo, config)
+
+	BeforeSuite(func() {
+		environment.Setup()
+	})
+
+	AfterSuite(func() {
+		environment.Teardown()
+	})
+
 	RunSpecsWithDefaultAndCustomReporters(t, "Tests", []Reporter{
 		reporters.NewJUnitReporter(
 			fmt.Sprintf("../results/%s-junit_%d.xml", "Tests", ginkgoconfig.GinkgoConfig.ParallelNode),
 		),
 	})
-	RemoveHomeConfig()
 }
 
-func CreateHomeConfig() {
-	homePath = fmt.Sprintf("%s/cf_config_%s", os.Getenv("HOME"), strconv.Itoa(ginkgoconfig.GinkgoConfig.ParallelNode))
-	os.MkdirAll(homePath, os.ModePerm)
-	os.Setenv("CF_HOME", homePath)
-
-	Expect(Cf("api", os.Getenv("API_ENDPOINT"))).To(ExitWith(0))
-	Expect(Cf("login", "-u", os.Getenv("CF_USER"), "-p", os.Getenv("CF_USER_PASSWORD"), "-o", os.Getenv("CF_ORG"), "-s", os.Getenv("CF_SPACE"))).To(ExitWith(0))
-}
-
-func RemoveHomeConfig() {
-	os.RemoveAll(homePath)
+func AppUri(appname string) string {
+	return "http://" + appname + "." + environment.Config.AppsDomain
 }
