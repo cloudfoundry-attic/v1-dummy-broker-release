@@ -14,10 +14,11 @@ var _ = Describe("Catalog Update", func() {
 	defaultTimeout := 60
 
 	It("adds its service offerings and plans to Cloud Controller", func() {
+		serviceOfferingRegex := fmt.Sprintf("%s.*%s", environment.ServiceInfo.ServiceName, environment.ServiceInfo.PlanName)
+
 		// verify that the service and plan are currently in the catalog
 		plans := Cf("marketplace").Wait(defaultTimeout).Out.Contents()
-		Expect(plans).To(ContainSubstring(environment.ServiceInfo.ServiceName))
-		Expect(plans).To(ContainSubstring(environment.ServiceInfo.PlanName))
+		Expect(plans).To(MatchRegexp(serviceOfferingRegex))
 
 		// delete the service and its plans (delete instances and bindings first)
 		AsUser(environment.Context.AdminUserContext(), func() {
@@ -25,20 +26,18 @@ var _ = Describe("Catalog Update", func() {
 		})
 
 		plans = Cf("marketplace").Wait(defaultTimeout).Out.Contents()
-		Expect(plans).NotTo(ContainSubstring(environment.ServiceInfo.ServiceName))
-		Expect(plans).NotTo(ContainSubstring(environment.ServiceInfo.PlanName))
+		Expect(plans).NotTo(MatchRegexp(serviceOfferingRegex))
 
-		Expect(serviceIsPopulated()).To(Equal(true), "Cloud Controller was not populated with the expected service offering.")
+		Expect(serviceIsPopulated(serviceOfferingRegex)).To(Equal(true), "Cloud Controller was not populated with the expected service offering.")
 	})
 })
 
 // a v1 broker periodically broadcasts service offerings.
 // wait some period of time for the offering to appear in Cloud Controller
-func serviceIsPopulated() bool {
+func serviceIsPopulated(serviceOfferingRegex string) bool {
 	var marketplaceSession *Session
 	var retryInterval time.Duration = 20 * time.Second
 	retryAttempts := 10
-	serviceOfferingRegex := fmt.Sprintf("%s.*%s", environment.ServiceInfo.ServiceName, environment.ServiceInfo.PlanName)
 	foundServiceOffering := false
 
 retryLoop:
