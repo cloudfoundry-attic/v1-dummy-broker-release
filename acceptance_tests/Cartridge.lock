@@ -1,4 +1,4 @@
 github.com/onsi/ginkgo	1e48048b2e01c7f1830144e30eea21db3cd3b574
 github.com/onsi/gomega	e287925a206d2f7cf070e08c082ed93dd38fcecc
-github.com/pivotal-cf-experimental/cf-test-helpers	98f623cc95a731aec78981fee8259a5520414011
+github.com/cloudfoundry-incubator/cf-test-helpers	4f59f0770ebc6054cb9e1ab8fb4e823f1f9179c2
 github.com/nu7hatch/gouuid	179d4d0c4d8d407a32af483c2354df1d2c91e6c3

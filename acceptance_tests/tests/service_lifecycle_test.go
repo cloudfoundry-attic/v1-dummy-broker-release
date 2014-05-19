@@ -1,11 +1,11 @@
 package tests
 
 import (
+	. "github.com/cloudfoundry-incubator/cf-test-helpers/cf"
+	. "github.com/cloudfoundry-incubator/cf-test-helpers/generator"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gexec"
-	. "github.com/pivotal-cf-experimental/cf-test-helpers/cf"
-	. "github.com/pivotal-cf-experimental/cf-test-helpers/generator"
 	"net/http"
 
 	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"

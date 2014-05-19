@@ -57,3 +57,8 @@ func LoadPath(path string) (config IntegrationConfig) {
 
 	return
 }
+
+func AppUri(appName, path string) string {
+	appsDomain := LoadConfig().AppsDomain
+	return "http://" + appName + "." + appsDomain + path
+}
