@@ -1,7 +1,7 @@
 meta:
   stemcell:
-    name: bosh-aws-xen-ubuntu
-    version: latest
+    name: bosh-aws-xen-ubuntu-lucid-go_agent
+    version: (( merge || 2578 ))
 
 compilation:
   network: v1-dummy-broker-network
