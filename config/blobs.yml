@@ -24,3 +24,8 @@ sqlite/sqlite-autoconf-3070500.tar.gz:
   sha: !binary |-
     NGUxMzM4NDk3YjhkYTUwYjg0MzA3MTkxYmIzNDE4ZTllYzU3MTVkNw==
   size: 1551070
+ruby/ruby-2.0.0-p481.tar.gz:
+  object_id: bbe260c4-86d9-413f-a686-5569faaebbd7
+  sha: !binary |-
+    ZGRlZDdiNzM0OWQ1OWZlYjgzZDRmNzc0YjJkZGVjMjNlZWFiNzk3OA==
+  size: 13586757
