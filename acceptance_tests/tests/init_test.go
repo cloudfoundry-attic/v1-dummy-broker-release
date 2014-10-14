@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"
+	"../helpers"
 
 	. "github.com/onsi/ginkgo"
 	ginkgoconfig "github.com/onsi/ginkgo/config"

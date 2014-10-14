@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e -x
+
+cd /var/vcap/packages/acceptance-tests
+
+export GOROOT=/var/vcap/packages/golang
+export PATH=/var/vcap/packages/cli/bin:$GOROOT/bin:$PWD/bin:$PATH
+export CONFIG=$PWD/integration_config.json
+
+cat > integration_config.json <<EOF
+{
+  "api":           "<%= p('cf.api_url') %>",
+  "apps_domain":   "<%= p('cf.apps_domain') %>",
+  "admin_user":    "<%= p('cf.admin_username') %>",
+  "skip_ssl_validation": <%= p('cf.skip_ssl_validation') %>,
+EOF
+
+# don't expose passwords
+set +x
+
+cat >> integration_config.json <<EOF
+  "admin_password":   "<%= p('cf.admin_password') %>"
+}
+EOF
+
+set -x
+
+bin/test

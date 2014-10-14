@@ -4,7 +4,7 @@ meta:
     local_root: /var/vcap/store
 
   stemcell:
-    name: bosh-warden-boshlite-ubuntu-lucid-go_agent
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
     version: latest
 
 jobs:
@@ -18,6 +18,10 @@ jobs:
     networks:
     - name: services1
       static_ips: (( static_ips(1) ))
+  - name: acceptance-tests
+    instances: 1
+    networks:
+    - name: services1
 
 compilation:
   network: services1

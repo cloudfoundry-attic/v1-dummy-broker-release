@@ -47,6 +47,21 @@ jobs:
         uaa_password: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.password ))
         nats: (( .properties.nats ))
         service_auth_token: 36001246-f5d0-4d9a-aa33-7d2522fe1ea7
+  - name: acceptance-tests
+    template: acceptance-tests
+    release: v1-dummy-broker
+    instances: 1
+    resource_pool: services-small
+    lifecycle: errand
+    networks: (( merge ))
+    properties:
+      cf:
+        api_url: (( "https://api." .properties.domain ))
+        admin_username: (( merge ))
+        admin_password: (( merge ))
+        apps_domain: (( .properties.domain ))
+        skip_ssl_validation: (( merge || false ))
+
 update:
   canaries: 1
   canary_watch_time: 30000-60000

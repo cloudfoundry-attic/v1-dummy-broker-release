@@ -9,7 +9,7 @@ import (
 
 	"github.com/cloudfoundry-incubator/cf-test-helpers/cf"
 
-	helpers "github.com/cloudfoundry-incubator/v1-dummy-broker-release/acceptance_tests/helpers"
+	helpers "../helpers"
 )
 
 var _ = Describe("Service Migration", func() {

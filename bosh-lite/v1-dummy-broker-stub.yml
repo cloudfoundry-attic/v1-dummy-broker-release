@@ -1,5 +1,12 @@
 director_uuid: PLACEHOLDER-DIRECTOR-UUID
 
+jobs:
+  - name: acceptance-tests
+    properties:
+      cf:
+        admin_username: admin
+        admin_password: admin
+        skip_ssl_validation: true
 properties:
   domain: 10.244.0.34.xip.io
 

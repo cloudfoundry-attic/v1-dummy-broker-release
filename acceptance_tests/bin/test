@@ -1,27 +1,18 @@
-#!/bin/sh
-# vim: set ft=sh
+#!/bin/bash
 
 set -e
+set -x
+set -u
 
 if ! which go 2>/dev/null; then
   echo "Go is not installed."
   exit 1
 fi
 
-if [ -z "$GOPATH" ]; then
-  echo "\$GOPATH is not set."
-  exit 1
-fi
+GOPATH=$PWD/vendor \
+  go install github.com/onsi/ginkgo/ginkgo
+  
+go fmt ./tests
 
-go get -u github.com/vito/gocart
-gocart  install
-
-go install github.com/onsi/ginkgo/ginkgo
-
-echo "Formatting code..."
-(
-  cd tests
-  go fmt
-)
-
-ginkgo -r -v -slowSpecThreshold=300 --nodes=1 "$@" # don't run tests in parallel
+GOPATH=$PWD/vendor CF_COLOR=false CF_VERBOSE_OUTPUT=true \
+  vendor/bin/ginkgo -r -v -slowSpecThreshold=300 --nodes=1 "$@" ./tests # don't run tests in parallel
