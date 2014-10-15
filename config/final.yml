@@ -1,4 +1,5 @@
 ---
+final_name: v1-dummy-broker
 blobstore:
     provider: s3
     options:
