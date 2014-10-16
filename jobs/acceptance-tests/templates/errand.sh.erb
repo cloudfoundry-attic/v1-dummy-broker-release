@@ -6,6 +6,7 @@ cd /var/vcap/packages/acceptance-tests
 export GOROOT=/var/vcap/packages/golang
 export PATH=/var/vcap/packages/cli/bin:$GOROOT/bin:$PWD/bin:$PATH
 export CONFIG=$PWD/integration_config.json
+export CF_COLOR=false #makes gocd output easier to read
 
 cat > integration_config.json <<EOF
 {
