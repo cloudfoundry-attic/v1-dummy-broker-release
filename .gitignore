@@ -4,7 +4,7 @@ acceptance_tests/vendor/pkg
 acceptance_tests/vendor/bin
 config/dev.yml
 config/private.yml
-releases/*.tgz
+releases/**/*.tgz
 dev_releases
 .blobs
 blobs
