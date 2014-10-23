@@ -1,0 +1,58 @@
+---
+packages:
+- name: sqlite
+  version: 80722951ac13d3323ff9d95d3faf3e955707a2d1
+  sha1: e9e097d2e291ffe5b48413f9da47a91f1b3810e5
+  fingerprint: 80722951ac13d3323ff9d95d3faf3e955707a2d1
+  dependencies: []
+- name: cli
+  version: 7afaec42a4e42641b6f156784f80d229f53e7482
+  sha1: c915d21cd52860adf29d72feabb747152a4638cd
+  fingerprint: 7afaec42a4e42641b6f156784f80d229f53e7482
+  dependencies: []
+- name: v1-dummy-broker
+  version: 4800a2f9b239251017887f370bf0ea9c59d4b8f7
+  sha1: fccde4c66d11128c905a6db137b97582ee156b3e
+  fingerprint: 4800a2f9b239251017887f370bf0ea9c59d4b8f7
+  dependencies:
+  - sqlite
+  - ruby
+- name: acceptance-tests
+  version: 576eed9d4c4cc415aaf8a8797f7046523b387227
+  sha1: 19906b826a32e9dee60bd82314e97be180705758
+  fingerprint: 576eed9d4c4cc415aaf8a8797f7046523b387227
+  dependencies:
+  - golang
+  - cli
+- name: ruby
+  version: cd4d8494a137e228e6358eb18eee7528e371a0a0
+  sha1: c578b4ced729f6f6572f043c5543a64e0031e4b6
+  fingerprint: cd4d8494a137e228e6358eb18eee7528e371a0a0
+  dependencies: []
+- name: common
+  version: 8ecced6383310492b543d2a5a3041410c7b33622
+  sha1: 75107ae1ddac690a7c8cb5a0f3e2f1273eb4dce4
+  fingerprint: 8ecced6383310492b543d2a5a3041410c7b33622
+  dependencies: []
+- name: golang
+  version: aa5f90f06ada376085414bfc0c56c8cd67abba9c
+  sha1: 83c19d02649e6766e845841e37abb1a885145be3
+  fingerprint: aa5f90f06ada376085414bfc0c56c8cd67abba9c
+  dependencies: []
+jobs:
+- name: v1-dummy-node
+  version: c16593870c8ffccab88ecf4269f1e2b2924ad3fa
+  fingerprint: c16593870c8ffccab88ecf4269f1e2b2924ad3fa
+  sha1: b0d3d16730aa76a6806b632fd2144b51ec851b4b
+- name: v1-dummy-broker
+  version: f1b92db539772a6ed964d5f6dd2a1e4c27e4dc1a
+  fingerprint: f1b92db539772a6ed964d5f6dd2a1e4c27e4dc1a
+  sha1: 418582551dce6fbe7116d128bd8bf96ec412dfd6
+- name: acceptance-tests
+  version: ebb0aa938eaead0e11e048d8d699ff122f4b7557
+  fingerprint: ebb0aa938eaead0e11e048d8d699ff122f4b7557
+  sha1: d9b0e12da4162f053e799323ed3952357d948004
+commit_hash: 64e5b1fe
+uncommitted_changes: false
+name: v1-dummy-broker
+version: '10'
