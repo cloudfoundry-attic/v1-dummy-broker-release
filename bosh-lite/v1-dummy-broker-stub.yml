@@ -9,6 +9,8 @@ jobs:
         skip_ssl_validation: true
 properties:
   domain: 10.244.0.34.xip.io
+  app_domains:
+    - (( domain ))
 
   nats:
     user: nats
