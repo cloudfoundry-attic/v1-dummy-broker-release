@@ -118,8 +118,6 @@ describe BindingHttpHandler do
       expect(response).to have_received(:content=).with("403 Forbidden")
     end
 
-    it 'returns a 400 if the request is malformed'
-
     it 'returns a 500 if an unhandled error occurs' do
       handler.instance_variable_set(:@http_request_uri, "/#{@instance_name_1}")
       allow(instance_manager).to receive(:instances).and_raise(RuntimeError)
