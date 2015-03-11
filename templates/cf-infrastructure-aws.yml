@@ -24,24 +24,7 @@ jobs:
     instances: 1
     networks:
     - name: v1-dummy-broker-network
-networks:
-  - name: v1-dummy-broker-network
-    type: manual
-    subnets:
-    - name: default_unused
-      range: 10.10.32.0/20
-      reserved:
-        - 10.10.32.2 - 10.10.36.255
-        - 10.10.38.1 - 10.10.47.254
-      static:
-        - 10.10.37.1 - 10.10.37.100
-      gateway: 10.10.32.1
-      dns:
-        - 10.10.0.2
-      cloud_properties:
-        security_groups:
-        - cf
-        subnet: (( properties.template_only.aws.subnet_ids.services1 ))
+networks: (( merge ))
 
 resource_pools:
   - name: services-small
