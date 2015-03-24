@@ -1,7 +1,5 @@
 meta:
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2719.3
 
 compilation:
   network: v1-dummy-broker-network
@@ -29,8 +27,8 @@ networks: (( merge ))
 resource_pools:
   - name: services-small
     stemcell:
-      name: (( meta.stemcell.name ))
-      version: (( merge || meta.stemcell.version ))
+      name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+      version: latest
     network: v1-dummy-broker-network
     cloud_properties:
       instance_type: m3.medium
