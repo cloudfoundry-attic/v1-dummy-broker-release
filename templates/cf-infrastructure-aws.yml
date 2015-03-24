@@ -28,7 +28,9 @@ networks: (( merge ))
 
 resource_pools:
   - name: services-small
-    stemcell: (( meta.stemcell ))
+    stemcell:
+      name: (( meta.stemcell.name ))
+      version: (( merge || meta.stemcell.version ))
     network: v1-dummy-broker-network
     cloud_properties:
       instance_type: m1.small
