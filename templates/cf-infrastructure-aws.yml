@@ -33,7 +33,7 @@ resource_pools:
       version: (( merge || meta.stemcell.version ))
     network: v1-dummy-broker-network
     cloud_properties:
-      instance_type: m1.small
+      instance_type: m3.medium
       availability_zone: (( properties.template_only.aws.availability_zone ))
 
 properties:
