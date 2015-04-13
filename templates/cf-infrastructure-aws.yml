@@ -4,7 +4,7 @@ meta:
 compilation:
   network: v1-dummy-broker-network
   cloud_properties:
-    instance_type: c1.medium
+    instance_type: c4.large
     availability_zone: (( properties.template_only.aws.availability_zone ))
 
 jobs:
