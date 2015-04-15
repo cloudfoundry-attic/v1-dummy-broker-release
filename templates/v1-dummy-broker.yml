@@ -77,7 +77,11 @@ compilation:
 
 properties:
   domain: (( merge ))
-  nats: (( merge ))
+  nats:
+    port: (( merge ))
+    machines: (( merge ))
+    user: (( merge ))
+    password: (( merge ))
   v1-dummy-broker: (( merge ))
   app_domains: (( merge ))
 
