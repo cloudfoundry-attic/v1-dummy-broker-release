@@ -80,6 +80,7 @@ properties:
   nats:
     port: (( merge ))
     machines: (( merge ))
+    address: (( machines.[0] ))
     user: (( merge ))
     password: (( merge ))
   v1-dummy-broker: (( merge ))
