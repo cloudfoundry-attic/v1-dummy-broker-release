@@ -27,7 +27,7 @@ networks: (( merge ))
 resource_pools:
   - name: services-small
     stemcell:
-      name: bosh-aws-xen-ubuntu-trusty-go_agent
+      name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
       version: latest
     network: v1-dummy-broker-network
     cloud_properties:
