@@ -1,0 +1,62 @@
+---
+packages:
+- name: acceptance-tests
+  version: 129f1311dcb6e9387e5da17667fea487e43d2be4
+  fingerprint: 129f1311dcb6e9387e5da17667fea487e43d2be4
+  sha1: dde52d73d02768b83d209576a4d52f9242a8cd25
+  dependencies:
+  - cli
+  - golang
+- name: cli
+  version: 7afaec42a4e42641b6f156784f80d229f53e7482
+  fingerprint: 7afaec42a4e42641b6f156784f80d229f53e7482
+  sha1: c915d21cd52860adf29d72feabb747152a4638cd
+  dependencies: []
+- name: common
+  version: 8ecced6383310492b543d2a5a3041410c7b33622
+  fingerprint: 8ecced6383310492b543d2a5a3041410c7b33622
+  sha1: 75107ae1ddac690a7c8cb5a0f3e2f1273eb4dce4
+  dependencies: []
+- name: golang
+  version: aa5f90f06ada376085414bfc0c56c8cd67abba9c
+  fingerprint: aa5f90f06ada376085414bfc0c56c8cd67abba9c
+  sha1: 83c19d02649e6766e845841e37abb1a885145be3
+  dependencies: []
+- name: ruby
+  version: cd4d8494a137e228e6358eb18eee7528e371a0a0
+  fingerprint: cd4d8494a137e228e6358eb18eee7528e371a0a0
+  sha1: c578b4ced729f6f6572f043c5543a64e0031e4b6
+  dependencies: []
+- name: sqlite
+  version: 80722951ac13d3323ff9d95d3faf3e955707a2d1
+  fingerprint: 80722951ac13d3323ff9d95d3faf3e955707a2d1
+  sha1: e9e097d2e291ffe5b48413f9da47a91f1b3810e5
+  dependencies: []
+- name: v1-dummy-broker
+  version: 50d766a57a1ea8fc2a06b0ce84e585c36d5fa7e8
+  fingerprint: 50d766a57a1ea8fc2a06b0ce84e585c36d5fa7e8
+  sha1: c6f732c8b4651413dbf79e129e298b666d17647a
+  dependencies:
+  - ruby
+  - sqlite
+jobs:
+- name: acceptance-tests
+  version: ebb0aa938eaead0e11e048d8d699ff122f4b7557
+  fingerprint: ebb0aa938eaead0e11e048d8d699ff122f4b7557
+  sha1: d9b0e12da4162f053e799323ed3952357d948004
+- name: v1-dummy-broker
+  version: f1b92db539772a6ed964d5f6dd2a1e4c27e4dc1a
+  fingerprint: f1b92db539772a6ed964d5f6dd2a1e4c27e4dc1a
+  sha1: 418582551dce6fbe7116d128bd8bf96ec412dfd6
+- name: v1-dummy-node
+  version: c16593870c8ffccab88ecf4269f1e2b2924ad3fa
+  fingerprint: c16593870c8ffccab88ecf4269f1e2b2924ad3fa
+  sha1: b0d3d16730aa76a6806b632fd2144b51ec851b4b
+license:
+  version: 7707833c1046632c37e7bfc27def673d05e6e7bd
+  fingerprint: 7707833c1046632c37e7bfc27def673d05e6e7bd
+  sha1: fb6ec8e1a4d016b17de89fe62953dfc12239dc18
+commit_hash: eefd4cd4
+uncommitted_changes: true
+name: v1-dummy-broker
+version: '24'
