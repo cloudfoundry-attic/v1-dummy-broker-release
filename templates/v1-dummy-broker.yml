@@ -90,7 +90,6 @@ resource_pools:
   - name: services-small
     stemcell: (( merge ))
     network: (( merge ))
-    size: (( auto ))
     cloud_properties: (( merge ))
 
 networks: (( merge ))
