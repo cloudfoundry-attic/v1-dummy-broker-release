@@ -33,3 +33,4 @@ resource_pools:
 
 properties:
   template_only: (( merge ))
+  http_scheme: "https://"

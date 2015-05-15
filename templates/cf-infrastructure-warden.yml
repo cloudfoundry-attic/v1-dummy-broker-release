@@ -23,6 +23,9 @@ jobs:
     networks:
     - name: services1
 
+properties:
+  http_scheme: "http://"
+
 compilation:
   network: services1
   cloud_properties:

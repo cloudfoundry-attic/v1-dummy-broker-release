@@ -15,7 +15,8 @@ properties:
   nats:
     user: nats
     password: nats
-    address: 10.244.0.6
+    machines:
+    - 10.244.0.6
     port: 4222
 
   v1-dummy-broker:

@@ -19,8 +19,8 @@ jobs:
         service_unique_id: v1-dummy-broker-service
         plan_unique_id: v1-dummy-broker-plan
         pid_file: /var/vcap/sys/run/v1-dummy-node/v1-dummy-node.pid
-        uaa_endpoint: (( "https://uaa." .properties.domain ))
-        cloud_controller_uri: (( "https://api." .properties.domain ))
+        uaa_endpoint: (( .properties.http_scheme "uaa." .properties.domain ))
+        cloud_controller_uri: (( .properties.http_scheme "api." .properties.domain ))
         uaa_client_id: cf
         uaa_username: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.username ))
         uaa_password: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.password ))
@@ -40,8 +40,8 @@ jobs:
         service_unique_id: v1-dummy-broker-service
         plan_unique_id: v1-dummy-broker-plan
         pid_file: /var/vcap/sys/run/v1-dummy-broker/v1-dummy-broker.pid
-        uaa_endpoint: (( "https://uaa." .properties.domain ))
-        cloud_controller_uri: (( "https://api." .properties.domain ))
+        uaa_endpoint: (( .properties.http_scheme "uaa." .properties.domain ))
+        cloud_controller_uri: (( .properties.http_scheme "api." .properties.domain ))
         uaa_client_id: cf
         uaa_username: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.username ))
         uaa_password: (( .properties.v1-dummy-broker.uaa_client_auth_credentials.password ))
@@ -56,7 +56,7 @@ jobs:
     networks: (( merge ))
     properties:
       cf:
-        api_url: (( "https://api." .properties.domain ))
+        api_url: (( .properties.http_scheme "api." .properties.domain ))
         admin_username: (( merge ))
         admin_password: (( merge ))
         apps_domain: (( .properties.app_domains.[0] ))
@@ -73,7 +73,7 @@ compilation:
   workers: 1
   reuse_compilation_vms: true
   network: (( merge ))
-  cloud_properties: (( merge ))
+  cloud_properties: (( merge )) 
 
 properties:
   domain: (( merge ))
@@ -85,6 +85,7 @@ properties:
     password: (( merge ))
   v1-dummy-broker: (( merge ))
   app_domains: (( merge ))
+  http_scheme: (( merge ))
 
 resource_pools:
   - name: services-small
