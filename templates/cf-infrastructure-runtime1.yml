@@ -1,0 +1,36 @@
+compilation:
+  network: v1-dummy-broker-network
+  cloud_properties:
+    instance_type: c3.large
+    availability_zone: (( properties.template_only.aws.availability_zone ))
+
+jobs:
+  - name: v1-dummy-node
+    instances: 1
+    networks:
+    - name: services1
+      static_ips: (( static_ips(13) ))
+  - name: v1-dummy-broker
+    instances: 1
+    networks:
+    - name: services1
+      static_ips: (( static_ips(12) ))
+  - name: acceptance-tests
+    instances: 1
+    networks:
+    - name: services1
+networks: (( merge ))
+
+resource_pools:
+  - name: services-small
+    stemcell:
+      name: bosh-aws-xen-ubuntu-trusty-go_agent
+      version: latest
+    network: services1
+    cloud_properties:
+      instance_type: m3.medium
+      availability_zone: (( properties.template_only.aws.availability_zone ))
+
+properties:
+  template_only: (( merge ))
+  http_scheme: "https://"
