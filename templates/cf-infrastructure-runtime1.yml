@@ -1,5 +1,5 @@
 compilation:
-  network: v1-dummy-broker-network
+  network: services1
   cloud_properties:
     instance_type: c3.large
     availability_zone: (( properties.template_only.aws.availability_zone ))
