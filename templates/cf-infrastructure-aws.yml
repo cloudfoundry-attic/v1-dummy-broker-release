@@ -10,6 +10,7 @@ jobs:
     networks:
     - name: v1-dummy-broker-network
       static_ips: (( static_ips(13) ))
+
   - name: v1-dummy-broker
     instances: 1
     networks:
